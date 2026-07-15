@@ -330,6 +330,68 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .slider-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: -4px 0 14px;
+    }
+
+    .slider-head .source-line { margin: 0; }
+
+    .news-controls {
+      display: flex;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .slide-btn {
+      min-height: 38px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--ink);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .slide-btn:hover,
+    .slide-btn:focus {
+      border-color: var(--indigo);
+      outline: none;
+    }
+
+    .news-slider {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 100%;
+      gap: 12px;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scroll-snap-type: inline mandatory;
+      scroll-padding-inline: 2px;
+      padding: 2px 2px 10px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    .news-slider .card {
+      min-height: 250px;
+      scroll-snap-align: start;
+    }
+
+    .news-summary,
+    .news-relevance {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-summary { -webkit-line-clamp: 4; }
+    .news-relevance { -webkit-line-clamp: 2; }
+
     .card {
       padding: 16px;
       box-shadow: none;
@@ -538,6 +600,9 @@
       .metrics,
       .grid,
       .toolbar { grid-template-columns: 1fr; }
+      .slider-head { display: grid; }
+      .news-controls { width: 100%; }
+      .slide-btn { flex: 1; }
       .section-header { display: grid; }
       .card { min-height: auto; }
     }
@@ -641,8 +706,14 @@
         </div>
         <a class="btn primary" id="openNewsSheet" href="#" target="_blank" rel="noopener">แก้ข่าวสารในชีต</a>
       </div>
-      <p class="source-line" id="newsSource">กำลังโหลดข่าวสาร...</p>
-      <div class="grid" id="newsGrid"></div>
+      <div class="slider-head">
+        <p class="source-line" id="newsSource">กำลังโหลดข่าวสาร...</p>
+        <div class="news-controls" aria-label="เลื่อนข่าวสาร">
+          <button class="slide-btn" type="button" data-news-slide="-1">ก่อนหน้า</button>
+          <button class="slide-btn" type="button" data-news-slide="1">ถัดไป</button>
+        </div>
+      </div>
+      <div class="news-slider" id="newsGrid" aria-label="รายการข่าวสารแบบเลื่อนได้"></div>
     </section>
 
     <section class="section projects" id="projects">
@@ -778,7 +849,7 @@
       folderSheetName: window.RESEARCH_DOC_FOLDER_SHEET_NAME || "",
       portalUrl: window.RESEARCH_PORTAL_DB_URL || "",
       portalId: window.RESEARCH_PORTAL_DB_ID || "",
-      newsSheet: window.RESEARCH_PORTAL_NEWS_SHEET || "",
+      newsSheet: window.RESEARCH_PORTAL_NEWS_SHEET || "ข่าวสาร",
       projectsSheet: window.RESEARCH_PORTAL_PROJECTS_SHEET || "",
       toolsSheet: window.RESEARCH_PORTAL_TOOLS_SHEET || "",
       researchSheet: window.RESEARCH_PORTAL_RESEARCH_SHEET || "",
@@ -900,12 +971,13 @@
             <span class="chip indigo">${escapeHtml(item.area || "ทั่วไป")}</span>
           </div>
           <p><strong>${escapeHtml(item.source || "-")}</strong> · ${escapeHtml(item.category || "-")} · ${escapeHtml(item.date || "-")}</p>
-          <p>${escapeHtml(item.summary)}</p>
-          <p>เกี่ยวข้องกับงาน: ${escapeHtml(item.relevance || "-")}</p>
+          <p class="news-summary">${escapeHtml(item.summary)}</p>
+          <p class="news-relevance">เกี่ยวข้องกับงาน: ${escapeHtml(item.relevance || "-")}</p>
           <div class="link-list">${linkButtons({ label: "อ่านข่าว/แหล่งข้อมูล", url: item.url })}</div>
         </article>
       `).join("");
       renderMetrics();
+      startNewsAutoSlide();
     }
 
     function renderProjects() {
@@ -1159,7 +1231,40 @@
     searchInput.addEventListener("input", filterRecords);
     statusFilter.addEventListener("change", filterRecords);
     urgencyFilter.addEventListener("change", filterRecords);
+
+    let newsAutoTimer = null;
+
+    function slideNews(direction) {
+      const slider = el("newsGrid");
+      if (!slider || slider.children.length <= 1) return;
+
+      const step = slider.clientWidth + 12;
+      const maxScroll = slider.scrollWidth - slider.clientWidth;
+      if (maxScroll <= 0) return;
+
+      let next = slider.scrollLeft + direction * step;
+
+      if (next > maxScroll - 8) next = 0;
+      if (next < 0) next = maxScroll;
+
+      slider.scrollTo({ left: next, behavior: "smooth" });
+    }
+
+    function startNewsAutoSlide() {
+      if (newsAutoTimer) window.clearInterval(newsAutoTimer);
+      newsAutoTimer = window.setInterval(() => {
+        slideNews(1);
+      }, 6000);
+    }
+
     document.addEventListener("click", async (event) => {
+      const slideButton = event.target.closest("[data-news-slide]");
+      if (slideButton) {
+        const direction = Number(slideButton.dataset.newsSlide);
+        slideNews(direction);
+        return;
+      }
+
       const button = event.target.closest("[data-prompt-index]");
       if (!button) return;
       const prompt = state.prompts[Number(button.dataset.promptIndex)]?.prompt || "";
@@ -1186,6 +1291,7 @@
     renderPrompts();
     renderMetrics();
     loadAll();
+    startNewsAutoSlide();
   </script>
 </body>
 </html>
