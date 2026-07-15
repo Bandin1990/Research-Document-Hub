@@ -6,6 +6,7 @@
 
 - `index.html` หน้าเว็บหลัก
 - `config.js` ไฟล์ตั้งค่าลิงก์ Google Sheet, OneDrive และฐานข้อมูล Portal
+- `apps-script-news-fetcher.gs` สคริปต์ Google Apps Script สำหรับดึงข่าวอัตโนมัติทุกวัน
 - `.nojekyll` ไฟล์เปล่าสำหรับ GitHub Pages
 
 ## Google Sheet ที่เชื่อมอยู่
@@ -15,6 +16,27 @@
 ```text
 https://docs.google.com/spreadsheets/d/1OUTHRobKJZ2HG7qDMIWekcmuuk9JrDKnJlJsLnKqETg/edit?usp=sharing
 ```
+
+แท็บที่ใช้ในฐานข้อมูล Portal:
+
+- `ข่าวสาร`
+- `แหล่งข่าวอัตโนมัติ`
+- `โปรเจกต์`
+- `เครื่องมือสนับสนุน`
+- `แหล่งค้นคว้า`
+- `คลัง Prompt`
+
+## ตั้งค่าดึงข่าวอัตโนมัติ 09.00 น.
+
+1. เปิดฐานข้อมูล Portal ใน Google Sheet
+2. ไปที่ Extensions > Apps Script
+3. วางโค้ดจากไฟล์ `apps-script-news-fetcher.gs`
+4. กด Save
+5. เลือกฟังก์ชัน `installDailyNewsTrigger` แล้วกด Run
+6. อนุญาตสิทธิ์ครั้งแรก
+7. หลังจากนั้นระบบจะดึงข่าวทุกวันประมาณ 09.00 น. ตามเวลาไทย
+
+ถ้าต้องการทดสอบทันที ให้เลือกฟังก์ชัน `fetchNewsNow` แล้วกด Run ข้อมูลจะถูกเขียนลงแท็บ `ข่าวสาร`
 
 ทะเบียนติดตามงาน:
 
@@ -56,6 +78,7 @@ window.RESEARCH_DOC_FOLDER_SHEET_ID
 window.RESEARCH_DOC_FOLDER_SHEET_NAME
 window.RESEARCH_PORTAL_DB_URL
 window.RESEARCH_PORTAL_DB_ID
+window.RESEARCH_PORTAL_NEWS_SHEET
 window.RESEARCH_PORTAL_PROJECTS_SHEET
 window.RESEARCH_PORTAL_TOOLS_SHEET
 window.RESEARCH_PORTAL_RESEARCH_SHEET

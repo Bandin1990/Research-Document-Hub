@@ -21,6 +21,7 @@
       --amber: #b7791f;
       --red: #b42318;
       --violet: #6d28d9;
+      --indigo: #4f46e5;
       --radius: 8px;
       --shadow: 0 18px 45px rgba(16, 24, 40, .08);
     }
@@ -194,7 +195,7 @@
 
     .metrics {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 12px;
       margin-bottom: 16px;
     }
@@ -241,6 +242,9 @@
     .section.projects { border-top-color: var(--blue); box-shadow: 0 18px 42px rgba(37, 99, 235, .10); }
     .section.projects::before { background: linear-gradient(180deg, rgba(37, 99, 235, .10), transparent); }
 
+    .section.news { border-top-color: var(--indigo); box-shadow: 0 18px 42px rgba(79, 70, 229, .11); }
+    .section.news::before { background: linear-gradient(180deg, rgba(79, 70, 229, .11), transparent); }
+
     .section.records { border-top-color: var(--amber); box-shadow: 0 18px 42px rgba(183, 121, 31, .10); }
     .section.records::before { background: linear-gradient(180deg, rgba(183, 121, 31, .11), transparent); }
 
@@ -284,6 +288,7 @@
     }
 
     .section.projects .section-header h2::before { background: var(--blue); }
+    .section.news .section-header h2::before { background: var(--indigo); }
     .section.records .section-header h2::before { background: var(--amber); }
     .section.folders .section-header h2::before { background: var(--cyan); }
     .section.tools .section-header h2::before { background: var(--green); }
@@ -385,6 +390,7 @@
     .status.paused,
     .status.cancelled { background: #fff0ed; color: var(--red); }
     .chip.violet { background: #f1eafe; color: var(--violet); }
+    .chip.indigo { background: #eef2ff; color: var(--indigo); }
 
     .urgency.urgent { background: #fff6df; color: var(--amber); }
     .urgency.urgent-more { background: #ffe8cc; color: #c2410c; }
@@ -596,6 +602,7 @@
         </div>
       </div>
       <nav class="nav-links" aria-label="เมนูหลัก">
+        <a href="#news">ข่าวสาร</a>
         <a href="#projects">โปรเจกต์</a>
         <a href="#records">บันทึก</a>
         <a href="#folders">โฟลเดอร์</a>
@@ -609,7 +616,7 @@
       <div class="hero-main">
         <p class="eyebrow">Human Rights Research Work Portal</p>
         <h1><span>ระบบจัดการงานและองค์ความรู้</span><span>ของกลุ่มงานวิจัยและวิชาการสิทธิมนุษยชน</span></h1>
-        <p>ใช้ Google Sheet เป็นฐานข้อมูลกลาง ทุกคนแก้ข้อมูลจากชีตได้ ส่วนหน้านี้รวมภาพรวมโปรเจกต์ งานบันทึก เครื่องมือสนับสนุน แหล่งค้นคว้า และ Prompt ที่ใช้บ่อยไว้ในที่เดียว</p>
+        <p>ใช้ Google Sheet เป็นฐานข้อมูลกลาง ทุกคนแก้ข้อมูลจากชีตได้ ส่วนหน้านี้รวมข่าวสาร โปรเจกต์ งานบันทึก เครื่องมือสนับสนุน แหล่งค้นคว้า และ Prompt ที่ใช้บ่อยไว้ในที่เดียว</p>
         <div class="action-row">
           <a class="btn primary" id="openPortalDb" href="#" target="_blank" rel="noopener">เปิดฐานข้อมูล Portal</a>
           <a class="btn" id="openTracker" href="#" target="_blank" rel="noopener">เปิดทะเบียนบันทึก</a>
@@ -621,8 +628,21 @@
     <section class="metrics" aria-label="ภาพรวม">
       <div class="metric"><strong id="metricProjects">0</strong><span>โปรเจกต์ทั้งหมด</span></div>
       <div class="metric"><strong id="metricAvgProgress">0%</strong><span>ความก้าวหน้าเฉลี่ย</span></div>
+      <div class="metric"><strong id="metricNews">0</strong><span>ข่าว/แหล่งอัปเดต</span></div>
       <div class="metric"><strong id="metricUrgent">0</strong><span>งานด่วนในทะเบียน</span></div>
       <div class="metric"><strong id="metricKnowledge">0</strong><span>เครื่องมือ/แหล่งความรู้/Prompt</span></div>
+    </section>
+
+    <section class="section news" id="news">
+      <div class="section-header">
+        <div>
+          <h2>ข่าวสารวิจัย นวัตกรรม และสิทธิมนุษยชน</h2>
+          <p>รวมข่าวจากแหล่งข้อมูลที่ตรวจสอบได้ ทั้งไทยและต่างประเทศ เพื่อใช้ติดตามประเด็นใหม่ที่เกี่ยวข้องกับงานของกลุ่มงาน</p>
+        </div>
+        <a class="btn primary" id="openNewsSheet" href="#" target="_blank" rel="noopener">แก้ข่าวสารในชีต</a>
+      </div>
+      <p class="source-line" id="newsSource">กำลังโหลดข่าวสาร...</p>
+      <div class="grid" id="newsGrid"></div>
     </section>
 
     <section class="section projects" id="projects">
@@ -741,6 +761,7 @@
     const state = {
       records: window.RESEARCH_DOC_JOBS || [],
       folders: [],
+      news: [],
       projects: [],
       tools: [],
       research: [],
@@ -757,6 +778,7 @@
       folderSheetName: window.RESEARCH_DOC_FOLDER_SHEET_NAME || "",
       portalUrl: window.RESEARCH_PORTAL_DB_URL || "",
       portalId: window.RESEARCH_PORTAL_DB_ID || "",
+      newsSheet: window.RESEARCH_PORTAL_NEWS_SHEET || "",
       projectsSheet: window.RESEARCH_PORTAL_PROJECTS_SHEET || "",
       toolsSheet: window.RESEARCH_PORTAL_TOOLS_SHEET || "",
       researchSheet: window.RESEARCH_PORTAL_RESEARCH_SHEET || "",
@@ -858,8 +880,32 @@
         : 0;
       el("metricProjects").textContent = state.projects.length;
       el("metricAvgProgress").textContent = `${avg}%`;
+      el("metricNews").textContent = state.news.length;
       el("metricUrgent").textContent = state.records.filter((item) => ["ด่วน", "ด่วนมาก", "ด่วนที่สุด"].includes(item.urgency)).length;
       el("metricKnowledge").textContent = state.tools.length + state.research.length + state.prompts.length;
+    }
+
+    function renderNews() {
+      const grid = el("newsGrid");
+      if (!state.news.length) {
+        grid.innerHTML = `<div class="card"><h3>ยังไม่มีข่าวสาร</h3><p>เพิ่มข้อมูลในแท็บ “ข่าวสาร” ของฐานข้อมูล Portal</p></div>`;
+        renderMetrics();
+        return;
+      }
+
+      grid.innerHTML = state.news.map((item) => `
+        <article class="card">
+          <div class="card-top">
+            <h3>${escapeHtml(item.title)}</h3>
+            <span class="chip indigo">${escapeHtml(item.area || "ทั่วไป")}</span>
+          </div>
+          <p><strong>${escapeHtml(item.source || "-")}</strong> · ${escapeHtml(item.category || "-")} · ${escapeHtml(item.date || "-")}</p>
+          <p>${escapeHtml(item.summary)}</p>
+          <p>เกี่ยวข้องกับงาน: ${escapeHtml(item.relevance || "-")}</p>
+          <div class="link-list">${linkButtons({ label: "อ่านข่าว/แหล่งข้อมูล", url: item.url })}</div>
+        </article>
+      `).join("");
+      renderMetrics();
     }
 
     function renderProjects() {
@@ -1017,6 +1063,7 @@
     function setStaticLinks() {
       const links = {
         openPortalDb: config.portalUrl,
+        openNewsSheet: config.portalUrl,
         openProjectsSheet: config.portalUrl,
         openToolsSheet: config.portalUrl,
         openResearchSheet: config.portalUrl,
@@ -1033,6 +1080,19 @@
     }
 
     function loadAll() {
+      loadSheet(config.portalId, config.newsSheet, "select A,B,C,D,E,F,G,H,I where D is not null", (rows) => {
+        state.news = rows.map((row) => ({
+          date: cell(row, 0), source: cell(row, 1), category: cell(row, 2), title: cell(row, 3),
+          summary: cell(row, 4), url: cell(row, 5), area: cell(row, 6), relevance: cell(row, 7),
+          verified: cell(row, 8)
+        })).filter((item) => item.title);
+        el("newsSource").textContent = "แสดงข้อมูลจากแท็บข่าวสารในฐานข้อมูล Portal";
+        renderNews();
+      }, () => {
+        el("newsSource").textContent = "โหลดข่าวสารไม่สำเร็จ";
+        renderNews();
+      });
+
       loadSheet(config.portalId, config.projectsSheet, "select A,B,C,D,E,F,G,H,I where A is not null", (rows) => {
         state.projects = rows.map((row) => ({
           name: cell(row, 0), owner: cell(row, 1), status: cell(row, 2), progress: cell(row, 3),
@@ -1117,6 +1177,7 @@
     });
 
     setStaticLinks();
+    renderNews();
     renderProjects();
     renderRecords();
     renderFolders();

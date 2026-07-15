@@ -7,6 +7,7 @@ window.RESEARCH_DOC_FOLDER_SHEET_ID = "1D3kZi1tDUZHDLidw01-arkNJn8uoGiJ9_HGPmdCn
 window.RESEARCH_DOC_FOLDER_SHEET_NAME = "ชีต1";
 window.RESEARCH_PORTAL_DB_URL = "https://docs.google.com/spreadsheets/d/1OUTHRobKJZ2HG7qDMIWekcmuuk9JrDKnJlJsLnKqETg/edit?usp=sharing";
 window.RESEARCH_PORTAL_DB_ID = "1OUTHRobKJZ2HG7qDMIWekcmuuk9JrDKnJlJsLnKqETg";
+window.RESEARCH_PORTAL_NEWS_SHEET = "ข่าวสาร";
 window.RESEARCH_PORTAL_PROJECTS_SHEET = "โปรเจกต์";
 window.RESEARCH_PORTAL_TOOLS_SHEET = "เครื่องมือสนับสนุน";
 window.RESEARCH_PORTAL_RESEARCH_SHEET = "แหล่งค้นคว้า";
