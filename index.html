@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ระบบงานเอกสารกลุ่มงานวิจัย</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&display=swap");
+
+    :root {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f0f4f8;
+      --ink: #162033;
+      --muted: #687385;
+      --line: #dfe5ee;
+      --blue: #2563eb;
+      --blue-soft: #eaf0ff;
+      --green: #14845f;
+      --green-soft: #e8f7f0;
+      --amber: #b7791f;
+      --amber-soft: #fff6df;
+      --red: #b42318;
+      --red-soft: #fff0ed;
+      --teal: #0f766e;
+      --radius: 8px;
+      --shadow: 0 14px 34px rgba(22, 32, 51, .08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, .12), transparent 34rem),
+        linear-gradient(180deg, #fbfcff 0%, var(--bg) 42%);
+      font-family: "Bai Jamjuree", Tahoma, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: #fff;
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      min-width: 0;
+    }
+
+    .brand-title strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .brand-title span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      color: #314154;
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: var(--radius);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      background: var(--surface-soft);
+      outline: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .hero-main,
+    .hero-side,
+    .section {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .92);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+
+    .hero-main {
+      padding: 28px;
+    }
+
+    .hero-side {
+      padding: 20px;
+      display: grid;
+      align-content: space-between;
+      gap: 16px;
+      background: #172033;
+      color: #fff;
+    }
+
+    .eyebrow {
+      color: var(--teal);
+      font-weight: 700;
+      font-size: 13px;
+      margin: 0 0 8px;
+    }
+
+    .hero-main h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .hero-main h1 span {
+      display: block;
+    }
+
+    .hero-main p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      max-width: 760px;
+      font-size: 16px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      min-height: 42px;
+      padding: 9px 13px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    .btn:hover,
+    .btn:focus {
+      border-color: var(--blue);
+      outline: none;
+    }
+
+    .btn.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .btn.dark {
+      background: rgba(255, 255, 255, .12);
+      border-color: rgba(255, 255, 255, .22);
+      color: #fff;
+    }
+
+    .small-label {
+      color: rgba(255, 255, 255, .72);
+      font-size: 13px;
+      margin: 0 0 6px;
+    }
+
+    .hero-side strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .hero-side p {
+      margin: 8px 0 0;
+      color: rgba(255, 255, 255, .74);
+      font-size: 14px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 16px;
+      min-height: 108px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 32px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    .section-header p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .source-line {
+      margin: -4px 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) 220px 180px;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .field {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      min-height: 42px;
+    }
+
+    .folder-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .folder-card {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 14px;
+      min-height: 104px;
+      text-decoration: none;
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .folder-card:hover,
+    .folder-card:focus {
+      transform: translateY(-2px);
+      border-color: var(--blue);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, .12);
+      outline: none;
+    }
+
+    .folder-icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .folder-card:nth-child(2n) .folder-icon {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .folder-card:nth-child(3n) .folder-icon {
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .folder-name {
+      display: block;
+      font-weight: 700;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .folder-url {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 6px;
+      overflow-wrap: anywhere;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 860px;
+    }
+
+    th,
+    td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f3f6fb;
+      color: #314154;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 13px;
+      white-space: nowrap;
+      background: var(--blue-soft);
+      color: #22429a;
+      font-weight: 600;
+    }
+
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .status.admin {
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .status.head,
+    .status.done {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .status.cancelled {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .urgency {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 74px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      background: var(--surface-soft);
+      color: var(--muted);
+    }
+
+    .urgency.urgent {
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .urgency.urgent-more {
+      background: #ffe8cc;
+      color: #c2410c;
+    }
+
+    .urgency.urgent-most {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      background: #fff;
+      min-height: 154px;
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .step h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      background: #fff;
+    }
+
+    .panel h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .panel ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .panel li + li {
+      margin-top: 6px;
+    }
+
+    .message-box {
+      width: 100%;
+      min-height: 186px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      background: #fff;
+    }
+
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      background: var(--ink);
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: .2s ease;
+      z-index: 20;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .top-nav,
+      .hero,
+      .section-header {
+        grid-template-columns: 1fr;
+      }
+
+      .top-nav,
+      .section-header {
+        align-items: stretch;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .metrics,
+      .folder-grid,
+      .workflow,
+      .grid-two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .shell {
+        width: min(100% - 24px, 1180px);
+        padding-top: 14px;
+      }
+
+      .hero-main,
+      .hero-side,
+      .section {
+        padding: 16px;
+      }
+
+      .metrics,
+      .folder-grid,
+      .workflow,
+      .grid-two,
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .action-row .btn,
+      .section-header .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="top-nav">
+      <div class="brand">
+        <div class="brand-mark">วจ</div>
+        <div class="brand-title">
+          <strong>ระบบงานเอกสารกลุ่มงานวิจัย</strong>
+          <span>Google Sheet + OneDrive สำหรับติดตามไฟล์ล่าสุด</span>
+        </div>
+      </div>
+      <nav class="nav-links" aria-label="เมนูหลัก">
+        <a href="#folders">ทางลัดโฟลเดอร์</a>
+        <a href="#tracker">ทะเบียนงาน</a>
+        <a href="#workflow">ขั้นตอน</a>
+        <a href="#line">ข้อความ Line</a>
+      </nav>
+    </header>
+
+    <section class="hero" id="dashboard">
+      <div class="hero-main">
+        <p class="eyebrow">Research Document Hub</p>
+        <h1><span>ระบบจัดการและติดตามบันทึก</span><span>ของกลุ่มงานวิจัยและวิชาการสิทธิมนุษยชน</span></h1>
+        <p>ทีมกรอกสถานะและลิงก์ใน Google Sheet ส่วนหน้านี้ช่วยรวมทางลัดสำคัญไว้ให้กดใช้ง่าย ไม่ต้องไล่หาไฟล์ล่าสุดใน Line</p>
+        <div class="action-row">
+          <a class="btn primary" id="openTracker" href="#" target="_blank" rel="noopener">เปิดทะเบียนงาน</a>
+          <a class="btn" id="openFolderSheet" href="#" target="_blank" rel="noopener">แก้ทางลัดโฟลเดอร์</a>
+          <a class="btn" id="openOneDriveRoot" href="#" target="_blank" rel="noopener">เปิด OneDrive หลัก</a>
+        </div>
+      </div>
+      <aside class="hero-side">
+        <div>
+          <p class="small-label">วิธีใช้ที่ง่ายที่สุด</p>
+          <strong>กรอกงานในชีต แล้ววางลิงก์ไฟล์หลัก</strong>
+          <p>ถ้าเป็นลิงก์ OneDrive/Google Drive ที่แชร์ถูกต้อง ทุกคนจะเปิดแก้ไขออนไลน์ได้จากช่องเดียวกัน</p>
+        </div>
+        <a class="btn dark" href="#folders">ไปที่ทางลัดโฟลเดอร์</a>
+      </aside>
+    </section>
+
+    <section class="metrics" aria-label="ภาพรวมงาน">
+      <div class="metric">
+        <strong id="metricTotal">0</strong>
+        <span>งานทั้งหมดในทะเบียน</span>
+      </div>
+      <div class="metric">
+        <strong id="metricAdmin">0</strong>
+        <span>รอธุรการตรวจ</span>
+      </div>
+      <div class="metric">
+        <strong id="metricHead">0</strong>
+        <span>รอหัวหน้ากลุ่ม</span>
+      </div>
+      <div class="metric">
+        <strong id="metricUrgent">0</strong>
+        <span>งานด่วนทั้งหมด</span>
+      </div>
+    </section>
+
+    <section class="section" id="folders" aria-labelledby="folders-title">
+      <div class="section-header">
+        <div>
+          <h2 id="folders-title">ทางลัดโฟลเดอร์</h2>
+          <p>รายการนี้ดึงจาก Google Sheet “ทางลัดโฟลเดอร์” ถ้าต้องแก้ชื่อหรือลิงก์ ให้แก้ในชีตนั้นได้เลย</p>
+        </div>
+        <a class="btn primary" id="openFolderSheetInSection" href="#" target="_blank" rel="noopener">แก้ใน Google Sheet</a>
+      </div>
+      <p class="source-line" id="folderSource">กำลังโหลดทางลัดโฟลเดอร์...</p>
+      <div class="folder-grid" id="folderGrid"></div>
+    </section>
+
+    <section class="section" id="tracker" aria-labelledby="tracker-title">
+      <div class="section-header">
+        <div>
+          <h2 id="tracker-title">ทะเบียนติดตามงาน</h2>
+          <p>กรอกและแก้ไขงานจริงใน Google Sheet แล้วรีเฟรชหน้านี้เพื่อดูข้อมูลล่าสุด</p>
+        </div>
+        <a class="btn primary" id="openTrackerInTable" href="#" target="_blank" rel="noopener">กรอกงานใน Google Sheet</a>
+      </div>
+      <p class="source-line" id="trackerSource">กำลังโหลดทะเบียนงาน...</p>
+      <div class="toolbar">
+        <input class="field" id="searchInput" type="search" placeholder="ค้นหาชื่อเรื่อง สถานะ หรือผู้รับผิดชอบ">
+        <select class="field" id="statusFilter" aria-label="กรองสถานะ">
+          <option value="all">ทุกสถานะ</option>
+          <option value="ร่างเอกสาร">ร่างเอกสาร</option>
+          <option value="รอธุรการตรวจ">รอธุรการตรวจ</option>
+          <option value="แก้ไขตามธุรการ">แก้ไขตามธุรการ</option>
+          <option value="รอหัวหน้ากลุ่ม">รอหัวหน้ากลุ่ม</option>
+          <option value="แก้ไขตามหัวหน้า">แก้ไขตามหัวหน้า</option>
+          <option value="รอเสนอผู้อำนวยการ">รอเสนอผู้อำนวยการ</option>
+          <option value="เสร็จสิ้น">เสร็จสิ้น</option>
+          <option value="ยกเลิก">ยกเลิก</option>
+        </select>
+        <select class="field" id="urgencyFilter" aria-label="กรองความเร่งด่วน">
+          <option value="all">ทุกระดับ</option>
+          <option value="ด่วน">ด่วน</option>
+          <option value="ด่วนมาก">ด่วนมาก</option>
+          <option value="ด่วนที่สุด">ด่วนที่สุด</option>
+          <option value="ปกติ">ปกติ</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ชื่อเรื่อง</th>
+              <th>เจ้าของงาน</th>
+              <th>สถานะ</th>
+              <th>ความเร่งด่วน</th>
+              <th>กำหนดส่ง</th>
+              <th>หมายเหตุล่าสุด</th>
+              <th>ลิงก์</th>
+            </tr>
+          </thead>
+          <tbody id="jobTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="workflow" aria-labelledby="workflow-title">
+      <div class="section-header">
+        <div>
+          <h2 id="workflow-title">ขั้นตอนทำงานมาตรฐาน</h2>
+          <p>ให้ทุกเรื่องเดินตามลำดับเดียวกัน เพื่อลดการส่งไฟล์ซ้ำและช่วยรู้ว่างานอยู่ที่ใคร</p>
+        </div>
+      </div>
+      <div class="workflow">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>ร่างเอกสาร</h3>
+          <p>เจ้าหน้าที่ปฏิบัติการสร้างเรื่องในชีตและวางลิงก์โฟลเดอร์/ไฟล์หลัก</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>ธุรการตรวจ</h3>
+          <p>ตรวจรูปแบบและระเบียบในไฟล์กลาง แล้วอัปเดตสถานะในชีต</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>หัวหน้าพิจารณา</h3>
+          <p>เปิดจากลิงก์เดิม ใส่ความเห็น หรือเห็นชอบก่อนเสนอผู้บริหาร</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>ปิดงาน</h3>
+          <p>เก็บไฟล์ PDF/ฉบับลงนาม และเปลี่ยนสถานะเป็นเสร็จสิ้น</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="line" aria-labelledby="line-title">
+      <div class="section-header">
+        <div>
+          <h2 id="line-title">ข้อความสำหรับส่งใน Line</h2>
+          <p>ใช้ Line แค่แจ้งเตือนและส่งลิงก์ ไม่ส่งไฟล์แนบ</p>
+        </div>
+        <button class="btn primary" type="button" id="copyMessage">คัดลอกข้อความ</button>
+      </div>
+      <div class="grid-two">
+        <div class="panel">
+          <h3>เลือกข้อความ</h3>
+          <select class="field" id="messageType">
+            <option value="admin">ส่งให้ธุรการตรวจ</option>
+            <option value="head">ส่งให้หัวหน้ากลุ่มพิจารณา</option>
+            <option value="recheck">แจ้งว่าแก้ไขแล้ว</option>
+            <option value="done">แจ้งปิดงาน</option>
+          </select>
+          <ul style="margin-top: 14px;">
+            <li>ส่งลิงก์จากชีตหรือ OneDrive เท่านั้น</li>
+            <li>ใส่สถานะและผู้รับผิดชอบถัดไปทุกครั้ง</li>
+            <li>ถ้าแก้ไข ให้แก้ในไฟล์หลัก ไม่แยกไฟล์ใหม่</li>
+          </ul>
+        </div>
+        <textarea class="message-box" id="messageBox" aria-label="ข้อความสำหรับส่งใน Line"></textarea>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">คัดลอกข้อความแล้ว</div>
+
+  <script src="./ข้อมูลงานตัวอย่าง.js"></script>
+  <script>
+    const messages = {
+      admin: `เรื่อง: ขอให้ตรวจเอกสาร
+สถานะ: รอธุรการตรวจ
+รบกวนตรวจรูปแบบหนังสือและความถูกต้องตามระเบียบราชการครับ
+ลิงก์ไฟล์หลัก: วางลิงก์จาก Google Sheet
+กำหนดตรวจ: วางวันที่`,
+      head: `เรื่อง: ขอให้พิจารณาเอกสาร
+สถานะ: รอหัวหน้ากลุ่มพิจารณา
+ธุรการตรวจเรียบร้อยแล้ว รบกวนหัวหน้ากลุ่มพิจารณาในไฟล์กลางครับ
+ลิงก์ไฟล์หลัก: วางลิงก์จาก Google Sheet`,
+      recheck: `เรื่อง: แก้ไขเอกสารเรียบร้อย
+สถานะ: แก้ไขตามความเห็นเรียบร้อย
+แก้ไขตามความเห็นแล้วครับ รบกวนตรวจอีกครั้งที่ลิงก์เดิม
+ลิงก์ไฟล์หลัก: วางลิงก์จาก Google Sheet`,
+      done: `เรื่อง: ปิดงานเอกสาร
+สถานะ: เสร็จสิ้น
+จัดเก็บไฟล์ Word และ PDF ฉบับลงนามแล้วเรียบร้อยครับ
+ลิงก์โฟลเดอร์: วางลิงก์จาก Google Sheet`
+    };
+
+    let jobs = window.RESEARCH_DOC_JOBS || [];
+    let folders = [];
+
+    const rootUrl = window.RESEARCH_DOC_ROOT_URL || "";
+    const trackerUrl = window.RESEARCH_DOC_TRACKER_URL || "";
+    const trackerId = window.RESEARCH_DOC_TRACKER_ID || "";
+    const trackerSheet = window.RESEARCH_DOC_TRACKER_SHEET || "";
+    const folderSheetUrl = window.RESEARCH_DOC_FOLDER_SHEET_URL || "";
+    const folderSheetId = window.RESEARCH_DOC_FOLDER_SHEET_ID || "";
+    const folderSheetName = window.RESEARCH_DOC_FOLDER_SHEET_NAME || "";
+
+    const searchInput = document.getElementById("searchInput");
+    const statusFilter = document.getElementById("statusFilter");
+    const urgencyFilter = document.getElementById("urgencyFilter");
+    const jobTable = document.getElementById("jobTable");
+    const folderGrid = document.getElementById("folderGrid");
+    const trackerSource = document.getElementById("trackerSource");
+    const folderSource = document.getElementById("folderSource");
+    const messageType = document.getElementById("messageType");
+    const messageBox = document.getElementById("messageBox");
+    const copyMessage = document.getElementById("copyMessage");
+    const toast = document.getElementById("toast");
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function isUsableLink(value) {
+      return /^https?:\/\//.test(value || "");
+    }
+
+    function getStatusClass(status) {
+      if (status === "รอธุรการตรวจ" || status === "แก้ไขตามธุรการ") return "admin";
+      if (status === "รอหัวหน้ากลุ่ม" || status === "แก้ไขตามหัวหน้า") return "head";
+      if (status === "เสร็จสิ้น") return "done";
+      if (status === "ยกเลิก") return "cancelled";
+      return "";
+    }
+
+    function getUrgencyClass(urgency) {
+      if (urgency === "ด่วน") return "urgent";
+      if (urgency === "ด่วนมาก") return "urgent-more";
+      if (urgency === "ด่วนที่สุด") return "urgent-most";
+      return "";
+    }
+
+    function gvizUrl(spreadsheetId, sheetName, query, callbackName) {
+      return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?sheet=${encodeURIComponent(sheetName)}&headers=1&tq=${encodeURIComponent(query)}&tqx=out:json;responseHandler:${callbackName}`;
+    }
+
+    function loadSheet(spreadsheetId, sheetName, query, onSuccess, onError) {
+      if (!spreadsheetId || !sheetName) {
+        onError();
+        return;
+      }
+
+      const callbackName = `sheetCallback_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
+      const script = document.createElement("script");
+      const cleanup = () => {
+        delete window[callbackName];
+        script.remove();
+      };
+
+      window[callbackName] = (response) => {
+        try {
+          onSuccess(response?.table?.rows || []);
+        } catch (error) {
+          onError();
+        } finally {
+          cleanup();
+        }
+      };
+
+      script.onerror = () => {
+        onError();
+        cleanup();
+      };
+
+      script.src = gvizUrl(spreadsheetId, sheetName, query, callbackName);
+      document.body.appendChild(script);
+    }
+
+    function cell(row, index) {
+      const value = row.c?.[index];
+      return value?.f || value?.v || "";
+    }
+
+    function renderFileLinks(job) {
+      const links = [];
+      if (isUsableLink(job.folderUrl)) {
+        links.push(`<a href="${escapeHtml(job.folderUrl)}" target="_blank" rel="noopener">เปิดโฟลเดอร์</a>`);
+      }
+      if (isUsableLink(job.mainFileUrl)) {
+        links.push(`<a href="${escapeHtml(job.mainFileUrl)}" target="_blank" rel="noopener">เปิดไฟล์หลัก</a>`);
+      }
+      return links.length ? links.join("<br>") : "ยังไม่ได้ใส่ลิงก์";
+    }
+
+    function renderJobs() {
+      if (!jobs.length) {
+        jobTable.innerHTML = `<tr><td colspan="7">ยังไม่มีรายการงานในทะเบียน</td></tr>`;
+        updateMetrics();
+        return;
+      }
+
+      jobTable.innerHTML = jobs.map((job) => `
+        <tr data-status="${escapeHtml(job.status)}" data-urgency="${escapeHtml(job.urgency || "ปกติ")}">
+          <td>${escapeHtml(job.title)}</td>
+          <td>${escapeHtml(job.owner)}</td>
+          <td><span class="status ${getStatusClass(job.status)}">${escapeHtml(job.status || "-")}</span></td>
+          <td><span class="urgency ${getUrgencyClass(job.urgency)}">${escapeHtml(job.urgency || "ปกติ")}</span></td>
+          <td>${escapeHtml(job.dueDate)}</td>
+          <td>${escapeHtml(job.note)}</td>
+          <td>${renderFileLinks(job)}</td>
+        </tr>
+      `).join("");
+
+      updateMetrics();
+      filterRows();
+    }
+
+    function renderFolders() {
+      if (!folders.length) {
+        folderGrid.innerHTML = `
+          <a class="folder-card" href="${escapeHtml(rootUrl || "#")}" target="_blank" rel="noopener">
+            <span class="folder-icon">00</span>
+            <span>
+              <span class="folder-name">เปิดโฟลเดอร์หลัก</span>
+              <span class="folder-url">ยังโหลดทางลัดจากชีตไม่ได้</span>
+            </span>
+          </a>
+        `;
+        return;
+      }
+
+      folderGrid.innerHTML = folders.map((folder, index) => {
+        const number = String(index + 1).padStart(2, "0");
+        return `
+          <a class="folder-card" href="${escapeHtml(folder.url)}" target="_blank" rel="noopener">
+            <span class="folder-icon">${number}</span>
+            <span>
+              <span class="folder-name">${escapeHtml(folder.name)}</span>
+              <span class="folder-url">เปิดโฟลเดอร์ออนไลน์</span>
+            </span>
+          </a>
+        `;
+      }).join("");
+    }
+
+    function loadJobsFromGoogleSheet() {
+      loadSheet(
+        trackerId,
+        trackerSheet,
+        "select A,B,C,D,E,F,G,H,I,J,K,L,M where A is not null",
+        (rows) => {
+          const liveJobs = rows.map((row) => ({
+            title: cell(row, 0),
+            owner: cell(row, 1),
+            drafter: cell(row, 2),
+            adminReviewer: cell(row, 3),
+            status: cell(row, 4),
+            urgency: cell(row, 5) || "ปกติ",
+            startDate: cell(row, 6),
+            dueDate: cell(row, 7),
+            folderUrl: cell(row, 8),
+            mainFileUrl: cell(row, 9),
+            note: cell(row, 10),
+            nextOwner: cell(row, 11),
+            updatedAt: cell(row, 12)
+          })).filter((job) => job.title);
+
+          if (liveJobs.length) {
+            jobs = liveJobs;
+            trackerSource.textContent = "แสดงข้อมูลล่าสุดจาก Google Sheet ทะเบียนงาน";
+          } else {
+            trackerSource.textContent = "ยังไม่พบรายการงานใน Google Sheet";
+          }
+          renderJobs();
+        },
+        () => {
+          trackerSource.textContent = "โหลดทะเบียนงานไม่สำเร็จ จึงแสดงข้อมูลสำรองไว้ก่อน";
+          renderJobs();
+        }
+      );
+    }
+
+    function loadFoldersFromGoogleSheet() {
+      loadSheet(
+        folderSheetId,
+        folderSheetName,
+        "select A,B where A is not null",
+        (rows) => {
+          folders = rows.map((row) => ({
+            name: cell(row, 0),
+            url: cell(row, 1)
+          })).filter((folder) => folder.name && isUsableLink(folder.url));
+
+          folderSource.textContent = folders.length
+            ? "แสดงทางลัดล่าสุดจาก Google Sheet ทางลัดโฟลเดอร์"
+            : "ยังไม่พบลิงก์โฟลเดอร์ที่ใช้งานได้ในชีต";
+          renderFolders();
+        },
+        () => {
+          folderSource.textContent = "โหลดทางลัดโฟลเดอร์ไม่สำเร็จ";
+          renderFolders();
+        }
+      );
+    }
+
+    function updateMetrics() {
+      document.getElementById("metricTotal").textContent = jobs.length;
+      document.getElementById("metricAdmin").textContent = jobs.filter((job) => job.status === "รอธุรการตรวจ").length;
+      document.getElementById("metricHead").textContent = jobs.filter((job) => job.status === "รอหัวหน้ากลุ่ม").length;
+      document.getElementById("metricUrgent").textContent = jobs.filter((job) => ["ด่วน", "ด่วนมาก", "ด่วนที่สุด"].includes(job.urgency)).length;
+    }
+
+    function filterRows() {
+      const search = searchInput.value.trim().toLowerCase();
+      const status = statusFilter.value;
+      const urgency = urgencyFilter.value;
+      const rows = Array.from(document.querySelectorAll("#jobTable tr"));
+
+      rows.forEach((row) => {
+        const rowText = row.innerText.toLowerCase();
+        const matchSearch = !search || rowText.includes(search);
+        const matchStatus = status === "all" || row.dataset.status === status;
+        const matchUrgency = urgency === "all" || row.dataset.urgency === urgency;
+        row.style.display = matchSearch && matchStatus && matchUrgency ? "" : "none";
+      });
+    }
+
+    function updateMessage() {
+      messageBox.value = messages[messageType.value];
+    }
+
+    async function copyLineMessage() {
+      try {
+        await navigator.clipboard.writeText(messageBox.value);
+      } catch (error) {
+        messageBox.select();
+        document.execCommand("copy");
+      }
+      showToast("คัดลอกข้อความแล้ว");
+    }
+
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add("show");
+      window.setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function setStaticLinks() {
+      const links = {
+        openOneDriveRoot: rootUrl,
+        openTracker: trackerUrl,
+        openTrackerInTable: trackerUrl,
+        openFolderSheet: folderSheetUrl,
+        openFolderSheetInSection: folderSheetUrl
+      };
+
+      Object.entries(links).forEach(([id, url]) => {
+        const link = document.getElementById(id);
+        if (link && url) link.href = url;
+      });
+    }
+
+    searchInput.addEventListener("input", filterRows);
+    statusFilter.addEventListener("change", filterRows);
+    urgencyFilter.addEventListener("change", filterRows);
+    messageType.addEventListener("change", updateMessage);
+    copyMessage.addEventListener("click", copyLineMessage);
+
+    setStaticLinks();
+    renderJobs();
+    renderFolders();
+    loadJobsFromGoogleSheet();
+    loadFoldersFromGoogleSheet();
+    updateMessage();
+  </script>
+</body>
+</html>
