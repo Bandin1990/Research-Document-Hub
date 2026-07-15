@@ -1,14 +1,20 @@
-# ระบบจัดการและติดตามบันทึก
+# Portal กลุ่มงานวิจัยและวิชาการสิทธิมนุษยชน
 
 ชุดไฟล์นี้เตรียมไว้สำหรับอัปขึ้น GitHub Pages
 
 ## ไฟล์ในชุดนี้
 
 - `index.html` หน้าเว็บหลัก
-- `config.js` ไฟล์ตั้งค่าลิงก์ Google Sheet และ OneDrive
+- `config.js` ไฟล์ตั้งค่าลิงก์ Google Sheet, OneDrive และฐานข้อมูล Portal
 - `.nojekyll` ไฟล์เปล่าสำหรับ GitHub Pages
 
 ## Google Sheet ที่เชื่อมอยู่
+
+ฐานข้อมูล Portal:
+
+```text
+https://docs.google.com/spreadsheets/d/1OUTHRobKJZ2HG7qDMIWekcmuuk9JrDKnJlJsLnKqETg/edit?usp=sharing
+```
 
 ทะเบียนติดตามงาน:
 
@@ -48,7 +54,12 @@ window.RESEARCH_DOC_TRACKER_SHEET
 window.RESEARCH_DOC_FOLDER_SHEET_URL
 window.RESEARCH_DOC_FOLDER_SHEET_ID
 window.RESEARCH_DOC_FOLDER_SHEET_NAME
+window.RESEARCH_PORTAL_DB_URL
+window.RESEARCH_PORTAL_DB_ID
+window.RESEARCH_PORTAL_PROJECTS_SHEET
+window.RESEARCH_PORTAL_TOOLS_SHEET
+window.RESEARCH_PORTAL_RESEARCH_SHEET
+window.RESEARCH_PORTAL_PROMPTS_SHEET
 ```
 
 ถ้าเปลี่ยน Google Sheet ให้คัดลอก ID จาก URL ตรงส่วนหลัง `/d/` และก่อน `/edit`
-
